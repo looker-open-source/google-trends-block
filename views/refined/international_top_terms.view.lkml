@@ -19,7 +19,11 @@ view: +international_top_terms {
     drill_fields: []
     link: {
       label: "Term Over time"
-      url: "@{VIZ_CONFIG}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.week_month&fill_fields=international_top_terms.week_month&f[international_top_terms.country_name]={{ international_top_terms.country_name | url_encode }}&f[international_top_terms.region_name]={{ international_top_terms.region_name | url_encode }}&f[international_top_terms.term]={{ value | url_encode }}&sorts=international_top_terms.week_month+desc&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
+      url: "@{VIZ_CONFIG}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.week_month&fill_fields=international_top_terms.week_month&sorts=international_top_terms.week_month+desc&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
+    }
+    link: {
+      label: "Term By Region"
+      url: "@{VIZ_CONFIG}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.region_name&sorts=international_top_terms.avg_score+desc+0&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
     }
   }
 
@@ -35,5 +39,18 @@ view: +international_top_terms {
     type: average
     sql: ${rank} ;;
     value_format_name: decimal_0
+  }
+
+  measure: inverted_rank {
+    type: number
+    sql: 25 - ${rank} + 1 ;;
+    hidden: yes
+  }
+
+  measure: normalized_weight {
+    type: percent_of_total
+    sql: ${inverted_rank} ;;
+    label: "Proportional weight (Word Cloud)"
+    value_format_name: percent_0
   }
 }

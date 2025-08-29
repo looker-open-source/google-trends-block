@@ -4,7 +4,7 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: NhTMq5nSmRBqc1N7Hv17Ya
+  preferred_slug: QkhsNcw2tzfqylqiHak7uC
   elements:
   - title: Top Terms
     name: Top Terms
@@ -80,19 +80,106 @@
     col: 0
     width: 15
     height: 15
+  - title: Ranking
+    name: Ranking
+    model: google_trends
+    explore: international_top_terms
+    type: looker_wordcloud
+    fields: [international_top_terms.term, international_top_terms.normalized_weight,
+      international_top_terms.rank]
+    sorts: [international_top_terms.normalized_weight desc 0]
+    limit: 25
+    column_limit: 50
+    dynamic_fields:
+    - _kind_hint: dimension
+      _type_hint: number
+      args:
+      - international_top_terms.rank
+      based_on: international_top_terms.rank
+      calculation_type: percent_of_column_sum
+      category: table_calculation
+      label: Percent of International Top Terms Rank
+      source_field: international_top_terms.rank
+      table_calculation: percent_of_international_top_terms_rank
+      value_format:
+      value_format_name: percent_0
+      is_disabled: true
+    color_application:
+      collection_id: 5591d8d1-6b49-4f8e-bafa-b874d82f8eb7
+      palette_id: 18d0c733-1d87-42a9-934f-4ba8ef81d736
+      options:
+        steps: 5
+        reverse: true
+    rotation: true
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: true
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    x_axis_label: ''
+    x_axis_zoom: true
+    y_axis_zoom: true
+    series_colors: {}
+    column_spacing_ratio: 0.2
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    hidden_pivots: {}
+    hidden_fields: [international_top_terms.rank]
+    listen:
+      Country: international_top_terms.country_name
+      Region: international_top_terms.region_name
+      Refresh Date: international_top_terms.refresh_date
+    row: 0
+    col: 15
+    width: 9
+    height: 9
   filters:
   - name: Country
     title: Country
     type: field_filter
     default_value: ''
     allow_multiple_values: true
-    required: false
+    required: true
     ui_config:
-      type: tag_list
+      type: dropdown_menu
       display: popover
     model: google_trends
     explore: international_top_terms
-    listens_to_filters: [Region]
+    listens_to_filters: []
     field: international_top_terms.country_name
   - name: Region
     title: Region
@@ -110,7 +197,7 @@
   - name: Refresh Date
     title: Refresh Date
     type: field_filter
-    default_value: 2025/08/26 to 2025/08/27
+    default_value: yesterday
     allow_multiple_values: true
     required: false
     ui_config:

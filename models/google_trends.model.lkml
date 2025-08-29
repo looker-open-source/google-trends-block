@@ -16,3 +16,7 @@ explore: top_terms {}
 explore: international_top_terms {
   persist_for: "24 hours"
 }
+
+explore: international_top_rising_terms {
+  persist_for: "24 hours"
+}
