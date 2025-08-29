@@ -3,7 +3,7 @@ connection: "@{CONNECTION_NAME}"
 # include all the explores & Dashboards
 #
 # include: "/explores/*.explore.lkml"
-# include: "/dashboards/*.dashboard"
+include: "/dashboards/*.dashboard"
 include: "/views/refined/*.view.lkml"
 
 datagroup: google_trends {

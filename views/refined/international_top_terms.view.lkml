@@ -16,10 +16,10 @@ view: +international_top_terms {
   }
 
   dimension: term {
-    drill_fields: [term]
+    drill_fields: []
     link: {
       label: "Term Over time"
-      url: "/explore/google_trends/international_top_terms?fields=international_top_terms.avg_score,international_top_terms.week_month&fill_fields=international_top_terms.week_month&f[international_top_terms.country_name]={{ international_top_terms.country_name | url_encode }}&f[international_top_terms.region_name]={{ international_top_terms.region_name | url_encode }}&f[international_top_terms.term]={{ value | url_encode }}&sorts=international_top_terms.week_month+desc&limit=500&column_limit=50"
+      url: "@{VIZ_CONFIG}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.week_month&fill_fields=international_top_terms.week_month&f[international_top_terms.country_name]={{ international_top_terms.country_name | url_encode }}&f[international_top_terms.region_name]={{ international_top_terms.region_name | url_encode }}&f[international_top_terms.term]={{ value | url_encode }}&sorts=international_top_terms.week_month+desc&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
     }
   }
 
