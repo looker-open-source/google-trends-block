@@ -1,7 +1,7 @@
 project_name: "google_trends"
 
 constant: CONNECTION_NAME {
-  value: "default_bigquery_connection"
+  value: "finance_data"
   export: override_required
 }
 
