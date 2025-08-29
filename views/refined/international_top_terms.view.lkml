@@ -23,7 +23,7 @@ view: +international_top_terms {
     }
     link: {
       label: "Term By Region"
-      url: "@{VIZ_CONFIG}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.region_name&sorts=international_top_terms.avg_score+desc+0&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
+      url: "@{VIZ_REGION}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.region_name&sorts=international_top_terms.avg_score+desc+0&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
     }
   }
 
