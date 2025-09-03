@@ -25,6 +25,12 @@ view: +international_top_terms {
       label: "Term By Region"
       url: "@{VIZ_REGION}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.region_name&sorts=international_top_terms.avg_score+desc+0&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
     }
+
+    link: {
+      label: "Term Analysis Dashboard"
+      url: "/dashboards/67?Refresh+Date=yesterday&Country+Name={{ _filters['international_top_terms.country_name'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['international_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
+    }
+
   }
 
   measure: avg_score {
