@@ -85,10 +85,9 @@
     model: google_trends
     explore: international_top_terms
     type: looker_wordcloud
-    fields: [international_top_terms.term, international_top_terms.normalized_weight,
-      international_top_terms.rank]
-    sorts: [international_top_terms.normalized_weight desc 0]
-    limit: 25
+    fields: [international_top_terms.term, international_top_terms.rank, international_top_terms.avg_rank]
+    sorts: [international_top_terms.avg_rank desc 0]
+    limit: 15
     column_limit: 50
     dynamic_fields:
     - _kind_hint: dimension
@@ -158,7 +157,8 @@
     conditional_formatting_include_nulls: false
     defaults_version: 1
     hidden_pivots: {}
-    hidden_fields: [international_top_terms.rank]
+    hidden_fields: [international_top_terms.rank, international_top_terms.term_first,
+      international_top_terms.term_last]
     listen:
       Country: international_top_terms.country_name
       Region: international_top_terms.region_name
@@ -166,7 +166,7 @@
     row: 0
     col: 15
     width: 9
-    height: 9
+    height: 15
   filters:
   - name: Country
     title: Country
@@ -176,7 +176,7 @@
     required: true
     ui_config:
       type: dropdown_menu
-      display: popover
+      display: inline
     model: google_trends
     explore: international_top_terms
     listens_to_filters: []

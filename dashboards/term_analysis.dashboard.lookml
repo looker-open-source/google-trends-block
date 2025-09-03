@@ -1,0 +1,336 @@
+---
+- dashboard: term_analysis
+  title: Term Analysis
+  layout: newspaper
+  preferred_viewer: dashboards-next
+  description: ''
+  preferred_slug: 5A0F3Tcjt1o7e3jrAaxMng
+  elements:
+  - title: Over Time
+    name: Over Time
+    model: google_trends
+    explore: international_top_terms
+    type: looker_area
+    fields: [international_top_terms.avg_score, international_top_terms.week_month]
+    fill_fields: [international_top_terms.week_month]
+    filters:
+      international_top_terms.refresh_date: yesterday
+    sorts: [international_top_terms.week_month desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: monotone
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    x_axis_zoom: true
+    y_axis_zoom: true
+    series_colors:
+      international_top_terms.avg_score: "#7CB342"
+    defaults_version: 1
+    show_null_labels: true
+    listen:
+      Term is: international_top_terms.term
+      Refresh Date: international_top_terms.refresh_date
+      Country Name: international_top_terms.country_name
+      Region Name: international_top_terms.region_name
+    row: 14
+    col: 0
+    width: 16
+    height: 9
+  - title: By Region
+    name: By Region
+    model: google_trends
+    explore: international_top_terms
+    type: looker_column
+    fields: [international_top_terms.avg_score, international_top_terms.region_name]
+    sorts: [international_top_terms.avg_score desc 0]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: circle
+    show_value_labels: true
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
+      options:
+        steps: 5
+        reverse: true
+    x_axis_label: ''
+    x_axis_zoom: true
+    y_axis_zoom: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: first
+      num_rows: 0
+    hide_legend: true
+    series_colors:
+      international_top_terms.avg_score: "#079c98"
+    series_labels: {}
+    column_spacing_ratio: 0
+    show_dropoff: false
+    rotation: true
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    hidden_pivots: {}
+    hidden_fields: []
+    hidden_points_if_no: []
+    show_null_points: true
+    interpolation: linear
+    value_labels: legend
+    label_type: labPer
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    listen:
+      Term is: international_top_terms.term
+      Refresh Date: international_top_terms.refresh_date
+      Country Name: international_top_terms.country_name
+    row: 14
+    col: 16
+    width: 8
+    height: 9
+  - title: Similar terms (Top terms table)
+    name: Similar terms (Top terms table)
+    model: google_trends
+    explore: international_top_terms
+    type: looker_column
+    fields: [international_top_terms.avg_score, international_top_terms.term, international_top_terms.week_week]
+    pivots: [international_top_terms.term]
+    filters:
+      international_top_terms.avg_score: "<100"
+    sorts: [international_top_terms.term, international_top_terms.week_week desc]
+    limit: 500
+    column_limit: 7
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: true
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    show_null_points: true
+    interpolation: monotone
+    x_axis_zoom: true
+    y_axis_zoom: true
+    series_colors:
+      international_top_terms.avg_score: "#7CB342"
+    defaults_version: 1
+    hidden_pivots: {}
+    listen:
+      Country Name: international_top_terms.country_name
+      Similar: international_top_terms.term
+    row: 0
+    col: 0
+    width: 24
+    height: 7
+  - title: Similar terms (Top rising table)
+    name: Similar terms (Top rising table)
+    model: google_trends
+    explore: international_top_rising_terms
+    type: looker_column
+    fields: [international_top_rising_terms.week_week, international_top_rising_terms.term,
+      international_top_rising_terms.avg_score]
+    pivots: [international_top_rising_terms.term]
+    filters:
+      international_top_rising_terms.avg_score: "<100"
+    sorts: [international_top_rising_terms.term, international_top_rising_terms.week_week
+        desc]
+    limit: 5000
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: time
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    color_application:
+      collection_id: 5591d8d1-6b49-4f8e-bafa-b874d82f8eb7
+      palette_id: 18d0c733-1d87-42a9-934f-4ba8ef81d736
+      options:
+        steps: 5
+    x_axis_zoom: true
+    y_axis_zoom: true
+    series_colors: {}
+    show_null_points: true
+    interpolation: monotone
+    hidden_fields: []
+    hidden_pivots: {}
+    defaults_version: 1
+    listen:
+      Country Name: international_top_rising_terms.country_name
+      Region Name: international_top_rising_terms.region_name
+      Similar: international_top_rising_terms.term
+    row: 7
+    col: 0
+    width: 24
+    height: 7
+  filters:
+  - name: Country Name
+    title: Country Name
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+    model: google_trends
+    explore: international_top_terms
+    listens_to_filters: []
+    field: international_top_terms.country_name
+  - name: Region Name
+    title: Region Name
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+    model: google_trends
+    explore: international_top_terms
+    listens_to_filters: [Country Name]
+    field: international_top_terms.region_name
+  - name: Refresh Date
+    title: Refresh Date
+    type: field_filter
+    default_value: yesterday
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: relative_timeframes
+      display: inline
+      options: []
+    model: google_trends
+    explore: international_top_terms
+    listens_to_filters: []
+    field: international_top_terms.refresh_date
+  - name: Term is
+    title: Term is
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+    model: google_trends
+    explore: international_top_terms
+    listens_to_filters: []
+    field: international_top_terms.term
+  - name: Similar
+    title: Similar
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+    model: google_trends
+    explore: international_top_terms
+    listens_to_filters: []
+    field: international_top_terms.term
