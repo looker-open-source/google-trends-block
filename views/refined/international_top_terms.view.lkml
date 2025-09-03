@@ -28,7 +28,7 @@ view: +international_top_terms {
 
     link: {
       label: "Term Analysis Dashboard"
-      url: "/dashboards/67?Refresh+Date=yesterday&Country+Name={{ _filters['international_top_terms.country_name'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['international_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
+      url: "/dashboards/google_trends::term_analysis?Refresh+Date=yesterday&Country+Name={{ _filters['international_top_terms.country_name'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['international_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
     }
 
   }
