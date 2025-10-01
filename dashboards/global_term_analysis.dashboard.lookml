@@ -1,5 +1,5 @@
 ---
-- dashboard: term_analysis_global
+- dashboard: global_term_analysis
   title: Term Analysis Global
   layout: newspaper
   preferred_viewer: dashboards-next
