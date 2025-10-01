@@ -1,10 +1,10 @@
 ---
-- dashboard: global_term_analysis
+- dashboard: term_analysis_global
   title: Term Analysis Global
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: 5A0F3Tcjt1o7e3jrAaxMng
+  preferred_slug: TTWZbNGMokWIxVHM6FVwAJ
   elements:
   - title: Over Time
     name: Over Time
@@ -54,8 +54,8 @@
     listen:
       Term is: global_top_terms.term
       Refresh Date: global_top_terms.refresh_date
-      Dynamic Country: global_top_terms.dynamic_country
       Region Name: global_top_terms.region_name
+      Dynamic Country: global_top_terms.dynamic_country
     row: 14
     col: 0
     width: 16
@@ -199,9 +199,70 @@
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      Dynamic Country: global_top_terms.dynamic_country
       Similar: global_top_terms.term
+      Dynamic Country: global_top_terms.dynamic_country
     row: 0
+    col: 0
+    width: 24
+    height: 7
+  - title: Similar terms (Top rising table)
+    name: Similar terms (Top rising table)
+    model: google_trends
+    explore: international_top_rising_terms
+    type: looker_column
+    fields: [international_top_rising_terms.week_week, international_top_rising_terms.term,
+      international_top_rising_terms.avg_score]
+    pivots: [international_top_rising_terms.term]
+    filters:
+      international_top_rising_terms.avg_score: "<100"
+    sorts: [international_top_rising_terms.term, international_top_rising_terms.week_week
+        desc]
+    limit: 5000
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: time
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    color_application:
+      collection_id: 5591d8d1-6b49-4f8e-bafa-b874d82f8eb7
+      palette_id: 18d0c733-1d87-42a9-934f-4ba8ef81d736
+      options:
+        steps: 5
+    x_axis_zoom: true
+    y_axis_zoom: true
+    series_colors: {}
+    show_null_points: true
+    interpolation: monotone
+    hidden_fields: []
+    hidden_pivots: {}
+    defaults_version: 1
+    listen:
+      Region Name: international_top_rising_terms.region_name
+      Similar: international_top_rising_terms.term
+    row: 7
     col: 0
     width: 24
     height: 7
