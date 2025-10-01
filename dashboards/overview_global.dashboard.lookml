@@ -4,7 +4,7 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: QkhsNcw2tzfqylqiHak7uC
+  preferred_slug: QqTdsE1asE4DkGy0gqtTQP
   elements:
   - title: Top Terms
     name: Top Terms
@@ -13,8 +13,6 @@
     type: looker_bar
     fields: [global_top_terms.rank, global_top_terms.term, global_top_terms.avg_score]
     filters:
-      global_top_terms.country_name: Mexico
-      global_top_terms.region_name: Mexico City
       global_top_terms.refresh_date: last day
     sorts: [global_top_terms.rank]
     limit: 25
@@ -73,9 +71,9 @@
     hidden_pivots: {}
     hidden_fields: [global_top_terms.rank]
     listen:
-      Country: global_top_terms.country_name
       Region: global_top_terms.region_name
       Refresh Date: global_top_terms.refresh_date
+      Dynamic Country: global_top_terms.dynamic_country
     row: 0
     col: 0
     width: 15
@@ -157,30 +155,29 @@
     conditional_formatting_include_nulls: false
     defaults_version: 1
     hidden_pivots: {}
-    hidden_fields: [global_top_terms.rank, global_top_terms.term_first,
-      global_top_terms.term_last]
+    hidden_fields: [global_top_terms.rank, global_top_terms.term_first, global_top_terms.term_last]
     listen:
-      Country: global_top_terms.country_name
       Region: global_top_terms.region_name
       Refresh Date: global_top_terms.refresh_date
+      Dynamic Country: global_top_terms.dynamic_country
     row: 0
     col: 15
     width: 9
     height: 15
   filters:
-  - name: Country
-    title: Country
+  - name: Dynamic Country
+    title: Dynamic Country
     type: field_filter
-    default_value: ''
+    default_value: US
     allow_multiple_values: true
     required: true
     ui_config:
-      type: dropdown_menu
-      display: inline
+      type: tag_list
+      display: popover
     model: google_trends
     explore: global_top_terms
     listens_to_filters: []
-    field: global_top_terms.country_name
+    field: global_top_terms.dynamic_country
   - name: Region
     title: Region
     type: field_filter
@@ -192,7 +189,7 @@
       display: popover
     model: google_trends
     explore: global_top_terms
-    listens_to_filters: [Country]
+    listens_to_filters: [Dynamic Country]
     field: global_top_terms.region_name
   - name: Refresh Date
     title: Refresh Date
