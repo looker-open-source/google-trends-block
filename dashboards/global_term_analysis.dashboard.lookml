@@ -13,8 +13,6 @@
     type: looker_area
     fields: [global_top_terms.avg_score, global_top_terms.week_month]
     fill_fields: [global_top_terms.week_month]
-    filters:
-      global_top_terms.refresh_date: yesterday
     sorts: [global_top_terms.week_month desc]
     limit: 500
     column_limit: 50
@@ -53,7 +51,6 @@
     show_null_labels: true
     listen:
       Term is: global_top_terms.term
-      Refresh Date: global_top_terms.refresh_date
       Region Name: global_top_terms.region_name
       Dynamic Country: global_top_terms.dynamic_country
     row: 14
@@ -145,7 +142,6 @@
     show_comparison_label: true
     listen:
       Term is: global_top_terms.term
-      Refresh Date: global_top_terms.refresh_date
       Dynamic Country: global_top_terms.dynamic_country
     row: 14
     col: 16
@@ -293,20 +289,6 @@
     explore: global_top_terms
     listens_to_filters: [Dynamic Country]
     field: global_top_terms.region_name
-  - name: Refresh Date
-    title: Refresh Date
-    type: field_filter
-    default_value: yesterday
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: relative_timeframes
-      display: inline
-      options: []
-    model: google_trends
-    explore: global_top_terms
-    listens_to_filters: []
-    field: global_top_terms.refresh_date
   - name: Term is
     title: Term is
     type: field_filter

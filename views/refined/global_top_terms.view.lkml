@@ -35,11 +35,13 @@ view: global_top_terms {
             SELECT * fROM international
             UNION ALL
             SELECT * FROM local
+            ), MAX_REFRESH_DATE AS (
+              SELECT MAX(refresh_date) AS max_refresh_date FROM `@{TRENDS_PUBLIC_PROJECT_ID}.@{TRENDS_DATASET}.top_terms`
             )
             SELECT
               GENERATE_UUID() as primary_key,
               *
-            FROM global
+            FROM global CROSS JOIN MAX_REFRESH_DATE
             WHERE
             {% condition dynamic_country %} global.country_code {% endcondition %} ;;
 
@@ -54,12 +56,9 @@ view: global_top_terms {
     suggest_dimension: country_code
   }
 
-  # filter: dynamic_country_name {
-  #   type: string
-  #   hidden: no
-  #   default_value: "United States"
-  #   suggest_dimension: country_name
-  # }
+  dimension: max_refresh_date {
+    sql: ${TABLE}.max_refresh_date ;;
+  }
 
   dimension: primary_key {
     hidden: yes
@@ -70,6 +69,7 @@ view: global_top_terms {
 
   dimension: term {
     drill_fields: []
+    hidden: no
     link: {
       label: "Term Over time"
       url: "@{VIZ_CONFIG}{{ link }}&fields=global_top_terms.avg_score,global_top_terms.week_month&fill_fields=global_top_terms.week_month&sorts=global_top_terms.week_month+desc&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
@@ -87,7 +87,6 @@ view: global_top_terms {
   }
 
   dimension: dma_id {
-    type: number
     sql: ${TABLE}.dma_id ;;
   }
   dimension: dma_name {
@@ -96,6 +95,7 @@ view: global_top_terms {
   }
 
   dimension: country_code {
+    hidden: no
     type: string
     sql: ${TABLE}.country_code ;;
   }
@@ -110,7 +110,6 @@ view: global_top_terms {
     sql: ${TABLE}.rank ;;
   }
   dimension_group: refresh {
-    hidden: no
     type: time
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: yes
@@ -134,7 +133,7 @@ view: global_top_terms {
   dimension_group: week {
     hidden: no
     type: time
-    timeframes: [raw, date, week, month, quarter, year]
+    timeframes: [week, month, month_name, month_num, quarter, year]
     convert_tz: yes
     datatype: date
     sql: ${TABLE}.week ;;
@@ -144,12 +143,7 @@ view: global_top_terms {
   dimension: region_code {
     type: string
     hidden: no
-    label:
-    "{% if dynamic_country._parameter_value != 'US' %}Region Code
-    {% elsif dynamic_country._parameter_value  == 'US' %}DMA ID
-    {% else %}Region Code
-    {% endif %}"
-
+    label: "Region Code"
     sql:
       {% if dynamic_country._parameter_value != 'US' %}${region_code_1}
       {% elsif dynamic_country._parameter_value  == 'US' %} ${dma_id}
@@ -160,13 +154,7 @@ view: global_top_terms {
   dimension: region_name {
     type: string
     hidden: no
-    # group_label: "New"
-    label:
-      "{% if dynamic_country._parameter_value != 'US' %}Region
-      {% elsif dynamic_country._parameter_value  == 'US' %}DMA Name
-      {% else %}Region
-      {% endif %}"
-
+    label: "Region Name"
     sql:
       {% if dynamic_country._parameter_value != 'US' %}${region_name_1}
       {% elsif dynamic_country._parameter_value  == 'US' %} ${dma_name}
@@ -174,24 +162,8 @@ view: global_top_terms {
       {% endif %} ;;
   }
 
-  # dimension: region_name_c {
-  #   type: string
-  #   hidden: no
-  #   # group_label: "New"
-  #   label:
-  #   "{% if dynamic_country_name._filter_value != 'United States' %}Region C
-  #   {% elsif dynamic_country_name._filter_value  == 'United States' %}DMA Name C
-  #   {% else %}Region C
-  #   {% endif %}"
-
-  #   sql:
-  #     {% if dynamic_country_name._filter_value != 'United States' %}${region_name_1}
-  #     {% elsif dynamic_country_name._filter_value  == 'United States' %} ${dma_name}
-  #     {% else %} ${region_name_1}
-  #     {% endif %} ;;
-  # }
-
   measure: avg_score {
+    hidden: no
     label: "Average Score  (Index)"
     type: average
     sql: ${score} ;;
@@ -199,6 +171,7 @@ view: global_top_terms {
   }
 
   measure: avg_rank {
+    hidden: no
     label: "Average Rank"
     type: average
     sql: ${rank} ;;
@@ -208,10 +181,10 @@ view: global_top_terms {
   measure: inverted_rank {
     type: number
     sql: 25 - ${rank} + 1 ;;
-    hidden: yes
   }
 
   measure: normalized_weight {
+    hidden: no
     type: percent_of_total
     sql: ${inverted_rank} ;;
     label: "Proportional weight (Word Cloud)"

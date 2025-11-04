@@ -19,11 +19,11 @@ view: +international_top_rising_terms {
     drill_fields: []
     link: {
       label: "Term Over time"
-      url: "@{VIZ_CONFIG}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.week_month&fill_fields=international_top_terms.week_month&sorts=international_top_terms.week_month+desc&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
+      url: "@{VIZ_CONFIG}{{ link }}&fields=global_top_terms.avg_score,global_top_terms.week_month&fill_fields=global_top_terms.week_month&sorts=global_top_terms.week_month+desc&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
     }
     link: {
       label: "Term By Region"
-      url: "@{VIZ_CONFIG}{{ link }}&fields=international_top_terms.avg_score,international_top_terms.region_name&sorts=international_top_terms.avg_score+desc+0&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
+      url: "@{VIZ_CONFIG}{{ link }}&fields=global_top_terms.avg_score,global_top_terms.region_name&sorts=global_top_terms.avg_score+desc+0&limit=500&column_limit=50&vis_config={{ vis_config | encode_uri }}"
     }
   }
 

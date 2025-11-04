@@ -48,7 +48,7 @@ constant: VIZ_CONFIG {
   \"y_axis_zoom\": true,
   \"series_types\": {},
   \"series_colors\": {
-  \"international_top_terms.avg_score\": \"#7CB342\"
+  \"global_top_terms.avg_score\": \"#7CB342\"
   },
   \"type\": \"looker_area\",
   \"defaults_version\": 1,
@@ -106,7 +106,7 @@ constant: VIZ_REGION {
     \"hide_legend\": true,
     \"series_types\": {},
     \"series_colors\": {
-        \"international_top_terms.avg_score\": \"#079c98\"
+        \"global_top_terms.avg_score\": \"#079c98\"
     },
     \"series_labels\": {},
     \"column_spacing_ratio\": 0,

@@ -12,10 +12,8 @@
     explore: global_top_terms
     type: looker_bar
     fields: [global_top_terms.rank, global_top_terms.term, global_top_terms.avg_score]
-    filters:
-      global_top_terms.refresh_date: last day
     sorts: [global_top_terms.rank]
-    limit: 25
+    limit: 500
     column_limit: 50
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -72,7 +70,6 @@
     hidden_fields: [global_top_terms.rank]
     listen:
       Region: global_top_terms.region_name
-      Refresh Date: global_top_terms.refresh_date
       Dynamic Country: global_top_terms.dynamic_country
     row: 0
     col: 0
@@ -158,7 +155,6 @@
     hidden_fields: [global_top_terms.rank, global_top_terms.term_first, global_top_terms.term_last]
     listen:
       Region: global_top_terms.region_name
-      Refresh Date: global_top_terms.refresh_date
       Dynamic Country: global_top_terms.dynamic_country
     row: 0
     col: 15
@@ -191,17 +187,3 @@
     explore: global_top_terms
     listens_to_filters: [Dynamic Country]
     field: global_top_terms.region_name
-  - name: Refresh Date
-    title: Refresh Date
-    type: field_filter
-    default_value: yesterday
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: relative_timeframes
-      display: inline
-      options: []
-    model: google_trends
-    explore: global_top_terms
-    listens_to_filters: []
-    field: global_top_terms.refresh_date
