@@ -1,6 +1,8 @@
 include: "../raw/**.view.lkml"
+include: "./base_trends.view.lkml"
 
 view: +top_rising_terms {
+  extends: [base_trends]
   derived_table: {
     sql: SELECT
           *,
