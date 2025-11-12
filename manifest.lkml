@@ -75,44 +75,29 @@ constant: VIZ_REGION {
     \"stacking\": \"\",
     \"limit_displayed_rows\": false,
     \"legend_position\": \"center\",
-    \"point_style\": \"circle\",
-    \"show_value_labels\": true,
+    \"point_style\": \"none\",
+    \"show_value_labels\": false,
     \"label_density\": 25,
     \"x_axis_scale\": \"auto\",
     \"y_axis_combined\": true,
     \"ordering\": \"none\",
-    \"show_null_labels\": false,
+    \"show_null_labels\": true,
     \"show_totals_labels\": false,
     \"show_silhouette\": false,
     \"totals_color\": \"#808080\",
-    \"color_application\": {
-        \"collection_id\": \"7c56cc21-66e4-41c9-81ce-a60e1c3967b2\",
-        \"palette_id\": \"5d189dfc-4f46-46f3-822b-bfb0b61777b1\",
-        \"options\": {
-            \"steps\": 5,
-            \"__FILE\": \"google_trends/dashboards/overview.dashboard.lookml\",
-            \"__LINE_NUM\": 53,
-            \"reverse\": true
-        }
-    },
-    \"x_axis_label\": \"\",
     \"x_axis_zoom\": true,
     \"y_axis_zoom\": true,
-    \"limit_displayed_rows_values\": {
-        \"show_hide\": \"hide\",
-        \"first_last\": \"first\",
-        \"num_rows\": 0
-    },
-    \"hide_legend\": true,
     \"series_types\": {},
     \"series_colors\": {
-        \"global_top_terms.avg_score\": \"#079c98\"
+        \"global_top_terms.avg_score\": \"#12B5CB\"
     },
-    \"series_labels\": {},
-    \"column_spacing_ratio\": 0,
-    \"show_dropoff\": false,
-    \"rotation\": true,
-    \"type\": \"looker_column\",
+    \"show_null_points\": true,
+    \"interpolation\": \"monotone\",
+    \"type\": \"looker_bar\",
+    \"defaults_version\": 1,
+    \"map\": \"auto\",
+    \"map_projection\": \"\",
+    \"quantize_colors\": false,
     \"show_row_numbers\": true,
     \"transpose\": false,
     \"truncate_text\": true,
@@ -125,20 +110,6 @@ constant: VIZ_REGION {
     \"header_font_size\": 12,
     \"rows_font_size\": 12,
     \"conditional_formatting_include_totals\": false,
-    \"conditional_formatting_include_nulls\": false,
-    \"defaults_version\": 1,
-    \"hidden_pivots\": {},
-    \"hidden_fields\": [],
-    \"hidden_points_if_no\": [],
-    \"show_null_points\": true,
-    \"interpolation\": \"linear\",
-    \"value_labels\": \"legend\",
-    \"label_type\": \"labPer\",
-    \"custom_color_enabled\": true,
-    \"show_single_value_title\": true,
-    \"show_comparison\": false,
-    \"comparison_type\": \"value\",
-    \"comparison_reverse_colors\": false,
-    \"show_comparison_label\": true
+    \"conditional_formatting_include_nulls\": false
 }' %}"
 }
