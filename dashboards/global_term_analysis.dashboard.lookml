@@ -4,71 +4,36 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: TTWZbNGMokWIxVHM6FVwAJ
+  preferred_slug: It3RizN2CMzmZ4YkIxZw5Y
   elements:
-  - title: Over Time
-    name: Over Time
-    model: google_trends
-    explore: global_top_terms
-    type: looker_area
-    fields: [global_top_terms.avg_score, global_top_terms.week_month]
-    fill_fields: [global_top_terms.week_month]
-    sorts: [global_top_terms.week_month desc]
-    limit: 500
-    column_limit: 50
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: true
-    interpolation: monotone
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    x_axis_zoom: true
-    y_axis_zoom: true
-    series_colors:
-      global_top_terms.avg_score: "#7CB342"
-    defaults_version: 1
-    show_null_labels: true
-    listen:
-      Term is: global_top_terms.term
-      Region Name: global_top_terms.region_name
-      Dynamic Country: global_top_terms.dynamic_country
-    row: 14
-    col: 0
-    width: 16
-    height: 9
   - title: By Region
     name: By Region
     model: google_trends
     explore: global_top_terms
-    type: looker_column
+    type: looker_grid
     fields: [global_top_terms.avg_score, global_top_terms.region_name]
+    filters:
+      global_top_terms.is_latest_week: 'Yes'
     sorts: [global_top_terms.avg_score desc 0]
     limit: 500
     column_limit: 50
+    show_view_names: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     x_axis_gridlines: false
     y_axis_gridlines: true
-    show_view_names: false
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
@@ -81,7 +46,6 @@
     plot_size_by_field: false
     trellis: ''
     stacking: ''
-    limit_displayed_rows: false
     legend_position: center
     point_style: circle
     show_value_labels: true
@@ -113,19 +77,6 @@
     column_spacing_ratio: 0
     show_dropoff: false
     rotation: true
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: 12
-    rows_font_size: 12
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
     defaults_version: 1
     hidden_pivots: {}
     hidden_fields: []
@@ -142,11 +93,13 @@
     show_comparison_label: true
     listen:
       Term is: global_top_terms.term
-      Dynamic Country: global_top_terms.dynamic_country
+      Country: global_top_terms.dynamic_country
+      Is Latest Week (Yes / No): global_top_terms.is_latest_week
+      Week Cat: global_top_terms.week_cat
     row: 14
-    col: 16
-    width: 8
-    height: 9
+    col: 0
+    width: 24
+    height: 10
   - title: Similar terms (Top terms table)
     name: Similar terms (Top terms table)
     model: google_trends
@@ -196,7 +149,7 @@
     hidden_pivots: {}
     listen:
       Similar: global_top_terms.term
-      Dynamic Country: global_top_terms.dynamic_country
+      Country: global_top_terms.dynamic_country
     row: 0
     col: 0
     width: 24
@@ -214,7 +167,7 @@
     sorts: [international_top_rising_terms.term, international_top_rising_terms.week_week
         desc]
     limit: 5000
-    column_limit: 50
+    column_limit: 10
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -263,15 +216,15 @@
     width: 24
     height: 7
   filters:
-  - name: Dynamic Country
-    title: Dynamic Country
+  - name: Country
+    title: Country
     type: field_filter
-    default_value: ''
+    default_value: MX
     allow_multiple_values: true
     required: false
     ui_config:
-      type: tag_list
-      display: popover
+      type: dropdown_menu
+      display: inline
     model: google_trends
     explore: global_top_terms
     listens_to_filters: []
@@ -287,7 +240,7 @@
       display: popover
     model: google_trends
     explore: global_top_terms
-    listens_to_filters: [Dynamic Country]
+    listens_to_filters: [Country]
     field: global_top_terms.region_name
   - name: Term is
     title: Term is
@@ -315,3 +268,29 @@
     explore: global_top_terms
     listens_to_filters: []
     field: global_top_terms.term
+  - name: Is Latest Week (Yes / No)
+    title: Is Latest Week (Yes / No)
+    type: field_filter
+    default_value: 'Yes'
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: button_toggles
+      display: inline
+    model: google_trends
+    explore: global_top_terms
+    listens_to_filters: []
+    field: global_top_terms.is_latest_week
+  - name: Week Cat
+    title: Week Cat
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: popover
+    model: google_trends
+    explore: global_top_terms
+    listens_to_filters: [Is Latest Week (Yes / No)]
+    field: global_top_terms.week_cat
