@@ -16,13 +16,10 @@ view: global_top_terms {
             rank,
             score,
             term,
-            CAST(NULL AS INT64) as dma_id,
-            CAST(NULL AS STRING) as dma_name,
             country_code,
             country_name,
             region_code,
             region_name,
-            GENERATE_UUID() as primary_key
           FROM
             `@{TRENDS_PUBLIC_PROJECT_ID}.@{TRENDS_DATASET}.international_top_terms`
           WHERE
@@ -34,15 +31,13 @@ view: global_top_terms {
                 rank,
                 score,
                 term,
-                CAST(dma_id AS INT64) as dma_id,
-                dma_name,
                 'US' as country_code,
                 'United States' as country_name,
-                CAST(NULL AS STRING) as region_code,
-                CAST(NULL AS STRING) as region_name,
-                GENERATE_UUID() as primary_key
+                CAST(dma_id AS STRING) as region_code,
+                dma_name AS region_name,
               FROM
                 `@{TRENDS_PUBLIC_PROJECT_ID}.@{TRENDS_DATASET}.top_terms`
+              WHERE {% condition dynamic_country %} 'US' {% endcondition %}
               )
 
             SELECT * fROM international
@@ -56,65 +51,7 @@ view: global_top_terms {
             SELECT
               GENERATE_UUID() as primary_key,
               *
-            FROM global CROSS JOIN MAX_DATES
-            WHERE
-              {% condition dynamic_country %} global.country_code {% endcondition %} ;;
-  }
-
-  # --- Filter Parameter ---
-
-
-  parameter: dynamic_country {
-    group_label: "Filters"
-    label: "Country"
-    description: "Filter data by a specific country code (e.g., 'US', 'GB', 'MX'). Default is 'US'."
-    type: unquoted
-    hidden: no
-    default_value: "US"
-
-    allowed_value: { value: "AR" label: "Argentina" }
-    allowed_value: { value: "AT" label: "Austria" }
-    allowed_value: { value: "AU" label: "Australia" }
-    allowed_value: { value: "BE" label: "Belgium" }
-    allowed_value: { value: "BR" label: "Brazil" }
-    allowed_value: { value: "CA" label: "Canada" }
-    allowed_value: { value: "CH" label: "Switzerland" }
-    allowed_value: { value: "CL" label: "Chile" }
-    allowed_value: { value: "CO" label: "Colombia" }
-    allowed_value: { value: "CZ" label: "Czech Republic" }
-    allowed_value: { value: "DE" label: "Germany" }
-    allowed_value: { value: "DK" label: "Denmark" }
-    allowed_value: { value: "EG" label: "Egypt" }
-    allowed_value: { value: "ES" label: "Spain" }
-    allowed_value: { value: "FI" label: "Finland" }
-    allowed_value: { value: "FR" label: "France" }
-    allowed_value: { value: "GB" label: "United Kingdom" }
-    allowed_value: { value: "HU" label: "Hungary" }
-    allowed_value: { value: "ID" label: "Indonesia" }
-    allowed_value: { value: "IL" label: "Israel" }
-    allowed_value: { value: "IN" label: "India" }
-    allowed_value: { value: "IT" label: "Italy" }
-    allowed_value: { value: "JP" label: "Japan" }
-    allowed_value: { value: "KR" label: "South Korea" }
-    allowed_value: { value: "MX" label: "Mexico" }
-    allowed_value: { value: "MY" label: "Malaysia" }
-    allowed_value: { value: "NG" label: "Nigeria" }
-    allowed_value: { value: "NL" label: "Netherlands" }
-    allowed_value: { value: "NO" label: "Norway" }
-    allowed_value: { value: "NZ" label: "New Zealand" }
-    allowed_value: { value: "PH" label: "Philippines" }
-    allowed_value: { value: "PL" label: "Poland" }
-    allowed_value: { value: "PT" label: "Portugal" }
-    allowed_value: { value: "RO" label: "Romania" }
-    allowed_value: { value: "SA" label: "Saudi Arabia" }
-    allowed_value: { value: "SE" label: "Sweden" }
-    allowed_value: { value: "TH" label: "Thailand" }
-    allowed_value: { value: "TR" label: "Turkey" }
-    allowed_value: { value: "TW" label: "Taiwan" }
-    allowed_value: { value: "UA" label: "Ukraine" }
-    allowed_value: { value: "US" label: "United States" }
-    allowed_value: { value: "VN" label: "Vietnam" }
-    allowed_value: { value: "ZA" label: "South Africa" }
+            FROM global CROSS JOIN MAX_DATES;;
   }
 
   # --- Overridden Dimensions ---
@@ -124,6 +61,11 @@ view: global_top_terms {
     link: {
       label: "Term Analysis Dashboard"
       url: "/dashboards/google_trends::global_term_analysis?Refresh+Date=yesterday&Country={{ _filters['global_top_terms.dynamic_country'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['global_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
+    }
+
+    link: {
+      label: "Term Analysis Dashboard DEV"
+      url: "/dashboards/73?Refresh+Date=yesterday&Country={{ _filters['global_top_terms.dynamic_country'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['global_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
     }
   }
 
@@ -139,37 +81,6 @@ view: global_top_terms {
   dimension: max_week {
     group_label: "Helper Dimensions"
     sql: ${TABLE}.max_week ;;
-  }
-
-  dimension: dma_id {
-    group_label: "Helper Dimensions"
-    label: "DMA ID (Raw US)"
-    description: "Raw DMA ID (US only). Use 'Region Code' instead."
-    sql: ${TABLE}.dma_id ;;
-  }
-
-  dimension: dma_name {
-    group_label: "Helper Dimensions"
-    label: "DMA Name (Raw US)"
-    description: "Raw DMA Name (US only). Use 'Region Name' instead."
-    type: string
-    sql: ${TABLE}.dma_name ;;
-  }
-
-  dimension: region_code_1 {
-    group_label: "Helper Dimensions"
-    label: "Region Code (Raw Intl)"
-    description: "Raw Region Code (International only). Use 'Region Code' instead."
-    type: string
-    sql: ${TABLE}.region_code ;;
-  }
-
-  dimension: region_name_1 {
-    group_label: "Helper Dimensions"
-    label: "Region Name (Raw Intl)"
-    description: "Raw Region Name (International only). Use 'Region Name' instead."
-    type: string
-    sql: ${TABLE}.region_name ;;
   }
 
   # --- Group: Geography ---
@@ -199,11 +110,7 @@ view: global_top_terms {
     description: "The name of the sub-region. Shows DMA Name for the US and Region Name for other countries."
     type: string
     hidden: no
-    sql:
-      {% if dynamic_country._parameter_value != 'US' %}${region_name_1}
-      {% elsif dynamic_country._parameter_value  == 'US' %} ${dma_name}
-      {% else %} ${region_name_1}
-      {% endif %} ;;
+    sql: ${TABLE}.region_name ;;
   }
 
   dimension: region_code {
@@ -212,11 +119,7 @@ view: global_top_terms {
     description: "The code of the sub-region. Shows DMA ID for the US and Region Code for other countries."
     type: string
     hidden: no
-    sql:
-      {% if dynamic_country._parameter_value != 'US' %}${region_code_1}
-      {% elsif dynamic_country._parameter_value  == 'US' %} ${dma_id}
-      {% else %} ${region_code_1}
-      {% endif %} ;;
+    sql: ${TABLE}.region_code ;;
   }
 
   dimension: week_cat {
@@ -239,10 +142,26 @@ view: global_top_terms {
     group_label: "Filters"
     label: "Is Latest Week"
     description: "Indicates if this row belongs to the most recent week
-    available in the data (based on max_week)."
+    available in the data (based on week)."
     hidden: no
     type: yesno
     sql: ${week_date} = DATE_TRUNC(${TABLE}.max_week, WEEK) ;;
+  }
+
+  dimension: is_latest_refresh_date {
+    group_label: "Filters"
+    label: "Is Latest Refresh Week"
+    description: "Indicates if this row belongs to the most recent snapshot
+    available in the data (based on refresh_week)."
+    hidden: no
+    type: yesno
+    sql: ${refresh_date} = ${TABLE}.max_refresh_date ;;
+  }
+
+  dimension: refresh_date_cat {
+    hidden: no
+    type: string
+    sql: CAST(${TABLE}.refresh_date AS STRING) ;;
   }
 
 }
