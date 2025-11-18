@@ -92,11 +92,12 @@
     comparison_reverse_colors: false
     show_comparison_label: true
     listen:
-      Term is: global_top_terms.term
-      Country: global_top_terms.dynamic_country
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Week Cat: global_top_terms.week_cat
-    row: 14
+      Country: global_top_terms.dynamic_country
+      Similar: global_top_terms.term
+      Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+    row: 7
     col: 0
     width: 24
     height: 10
@@ -148,13 +149,55 @@
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      Similar: global_top_terms.term
       Country: global_top_terms.dynamic_country
+      Similar: global_top_terms.term
+      Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
     row: 0
     col: 0
     width: 24
     height: 7
   filters:
+  - name: Is Latest Refresh Week (Yes / No)
+    title: Is Latest Refresh Week (Yes / No)
+    type: field_filter
+    default_value: 'Yes'
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: button_toggles
+      display: inline
+      options:
+      - 'Yes'
+    model: google_trends
+    explore: global_top_terms
+    listens_to_filters: []
+    field: global_top_terms.is_latest_refresh_date
+  - name: Is Latest Week (Yes / No)
+    title: Is Latest Week (Yes / No)
+    type: field_filter
+    default_value: 'Yes'
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: button_toggles
+      display: inline
+    model: google_trends
+    explore: global_top_terms
+    listens_to_filters: []
+    field: global_top_terms.is_latest_week
+  - name: Week Cat
+    title: Week Cat
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: true
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: google_trends
+    explore: global_top_terms
+    listens_to_filters: [Is Latest Week (Yes / No)]
+    field: global_top_terms.week_cat
   - name: Country
     title: Country
     type: field_filter
@@ -207,29 +250,3 @@
     explore: global_top_terms
     listens_to_filters: []
     field: global_top_terms.term
-  - name: Is Latest Week (Yes / No)
-    title: Is Latest Week (Yes / No)
-    type: field_filter
-    default_value: 'Yes'
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: button_toggles
-      display: inline
-    model: google_trends
-    explore: global_top_terms
-    listens_to_filters: []
-    field: global_top_terms.is_latest_week
-  - name: Week Cat
-    title: Week Cat
-    type: field_filter
-    default_value: ''
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: dropdown_menu
-      display: popover
-    model: google_trends
-    explore: global_top_terms
-    listens_to_filters: [Is Latest Week (Yes / No)]
-    field: global_top_terms.week_cat

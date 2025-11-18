@@ -60,12 +60,7 @@ view: global_top_terms {
   dimension: term {
     link: {
       label: "Term Analysis Dashboard"
-      url: "/dashboards/google_trends::global_term_analysis?Refresh+Date=yesterday&Country={{ _filters['global_top_terms.dynamic_country'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['global_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
-    }
-
-    link: {
-      label: "Term Analysis Dashboard DEV"
-      url: "/dashboards/73?Refresh+Date=yesterday&Country={{ _filters['global_top_terms.dynamic_country'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['global_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
+      url: "/dashboards/google_trends::global_term_analysis?Is+Latest+Refresh+Week+%28Yes+%2F+No%29=Yes&Is+Latest+Week+%28Yes+%2F+No%29={{ _filters['global_top_terms.is_latest_week'] | encode_uri }}&Week+Cat={{ _filters['global_top_terms.week_cat'] | encode_uri }}&Country={{ _filters['global_top_terms.dynamic_country'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['global_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
     }
   }
 
