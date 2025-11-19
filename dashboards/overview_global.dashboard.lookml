@@ -4,7 +4,7 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: ezptsWV7xCfCgTbcaWEMHt
+  preferred_slug: LZCLpDPrpdRFmiMfnFWTEv
   elements:
   - title: Top Terms
     name: Top Terms
@@ -69,11 +69,11 @@
     hidden_pivots: {}
     hidden_fields: [global_top_terms.rank]
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 2
     col: 0
     width: 15
@@ -157,11 +157,11 @@
     hidden_pivots: {}
     hidden_fields: [global_top_terms.rank, global_top_terms.term_first, global_top_terms.term_last]
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 2
     col: 15
     width: 9
@@ -238,11 +238,11 @@
     hidden_pivots: {}
     hidden_fields: [global_top_terms.rank, global_top_terms.avg_score]
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 0
     col: 0
     width: 5
@@ -330,11 +330,11 @@
     hidden_points_if_no: []
     series_labels: {}
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 0
     col: 5
     width: 3
@@ -422,11 +422,11 @@
     hidden_points_if_no: []
     series_labels: {}
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 0
     col: 13
     width: 3
@@ -503,11 +503,11 @@
     hidden_pivots: {}
     hidden_fields: [global_top_terms.rank, global_top_terms.avg_score]
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 0
     col: 8
     width: 5
@@ -584,11 +584,11 @@
     hidden_pivots: {}
     hidden_fields: [global_top_terms.rank, global_top_terms.avg_score]
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 0
     col: 16
     width: 5
@@ -676,11 +676,11 @@
     hidden_points_if_no: []
     series_labels: {}
     listen:
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
     row: 0
     col: 21
     width: 3
@@ -751,12 +751,12 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     listen:
-      Week Cat: global_top_rising_terms.week_cat
+      Growth Tier: global_top_rising_terms.rising_tier
       Country: global_top_rising_terms.dynamic_country
       Region: global_top_rising_terms.region_name
       Is Latest Week (Yes / No): global_top_rising_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_rising_terms.is_latest_refresh_date
-      Growth Tier: global_top_rising_terms.rising_tier
+      Week Cat: global_top_rising_terms.week_cat
     row: 19
     col: 0
     width: 16
@@ -764,7 +764,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: '[{"type":"h1","children":[{"text":"Trending Terms"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
     row: 17
@@ -848,10 +847,105 @@
       Region: global_top_rising_terms.region_name
       Is Latest Week (Yes / No): global_top_rising_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_rising_terms.is_latest_refresh_date
+      Week Cat: global_top_rising_terms.week_cat
     row: 19
     col: 16
     width: 8
     height: 13
+  - title: Top and Rising Terms
+    name: Top and Rising Terms
+    model: google_trends
+    explore: global_top_rising_terms
+    type: looker_grid
+    fields: [global_top_terms.term, global_top_rising_terms.avg_score, global_top_rising_terms.average_percent_gain,
+      global_top_rising_terms.avg_rank]
+    sorts: [global_top_rising_terms.avg_score desc 0]
+    limit: 500
+    column_limit: 50
+    show_view_names: false
+    show_row_numbers: false
+    transpose: true
+    truncate_text: false
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: transparent
+    limit_displayed_rows: false
+    enable_conditional_formatting: true
+    header_text_alignment: left
+    header_font_size: '12'
+    rows_font_size: '12'
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    show_sql_query_menu_options: false
+    show_totals: true
+    show_row_totals: true
+    truncate_header: false
+    minimum_column_width: 75
+    series_labels:
+      global_top_terms.term: Term
+      global_top_rising_terms.avg_score: Score
+      global_top_rising_terms.average_percent_gain: "% Growth"
+      global_top_rising_terms.avg_rank: Rank
+    series_cell_visualizations:
+      global_top_rising_terms.avg_score:
+        is_active: false
+    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: "#1A73E8",
+        font_color: !!null '', color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
+          palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab, options: {steps: 5}},
+        bold: false, italic: false, strikethrough: false, fields: [global_top_rising_terms.avg_score]},
+      {type: along a scale..., value: !!null '', background_color: "#1A73E8", font_color: !!null '',
+        color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2, palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab,
+          options: {steps: 5}}, bold: false, italic: false, strikethrough: false,
+        fields: [global_top_rising_terms.average_percent_gain]}]
+    series_value_format:
+      global_top_rising_terms.avg_score:
+        format_string: "#,##0"
+      global_top_rising_terms.average_percent_gain:
+        format_string: "#,##0"
+      global_top_rising_terms.avg_rank:
+        format_string: "#,##0"
+    hidden_pivots: {}
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Top and Rising terms (Growth Tier Filter)
+    listen:
+      Growth Tier: global_top_rising_terms.rising_tier
+      Country: global_top_terms.dynamic_country
+      Region: global_top_terms.region_name
+      Is Latest Week (Yes / No): global_top_rising_terms.is_latest_week
+      Is Latest Refresh Week (Yes / No): global_top_rising_terms.is_latest_refresh_date
+      Week Cat: global_top_terms.week_cat
+    row: 32
+    col: 0
+    width: 24
+    height: 4
   filters:
   - name: Is Latest Refresh Week (Yes / No)
     title: Is Latest Refresh Week (Yes / No)
