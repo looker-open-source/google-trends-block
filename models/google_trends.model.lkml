@@ -11,8 +11,3 @@ datagroup: google_trends {
 }
 
 persist_with: google_trends
-
-
-explore: global_top_rising_terms {
-  persist_with: google_trends
-}
