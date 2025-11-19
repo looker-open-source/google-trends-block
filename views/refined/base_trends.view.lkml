@@ -129,7 +129,7 @@ view: base_trends {
     timeframes: [date, raw, week, month, month_name, month_num, quarter, year, week_of_year]
     convert_tz: no
     datatype: date
-    hidden: no
+    # hidden: no
     sql: ${TABLE}.week ;;
   }
 
