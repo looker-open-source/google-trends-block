@@ -60,7 +60,7 @@ view: global_top_terms {
   dimension: term {
     link: {
       label: "Term Analysis Dashboard"
-      url: "/dashboards/google_trends::global_term_analysis?Is+Latest+Refresh+Week+%28Yes+%2F+No%29=Yes&Is+Latest+Week+%28Yes+%2F+No%29={{ _filters['global_top_terms.is_latest_week'] | encode_uri }}&Week+Cat={{ _filters['global_top_terms.week_cat'] | encode_uri }}&Country={{ _filters['global_top_terms.dynamic_country'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['global_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
+      url: "/dashboards/google_trends::global_term_analysis?Is+Latest+Refresh+Week+%28Yes+%2F+No%29=Yes&Is+Latest+Week+%28Yes+%2F+No%29={{ _filters['global_top_terms.is_latest_week'] | encode_uri }}&Week={{ _filters['global_top_terms.week_cat'] | encode_uri }}&Country={{ _filters['global_top_terms.dynamic_country'] | encode_uri }}&Term=%25{{ value }}%25&Region+Name={{ _filters['global_top_terms.region_name'] | encode_uri }}&Term+is={{ value }}&Similar=%25{{ value | encode_uri }}%25%2C%25{% assign words = value | split: ' ' %}{{ words[0] | encode_uri }}%25%2C%25{{ words | last | encode_uri }}%25"
     }
   }
 
@@ -78,50 +78,6 @@ view: global_top_terms {
     sql: ${TABLE}.max_week ;;
   }
 
-  # --- Group: Geography ---
-
-  dimension: country_code {
-    group_label: "Geography"
-    label: "Country Code"
-    description: "Two-letter ISO code for the country (e.g., 'US', 'GB')."
-    type: string
-    sql: ${TABLE}.country_code ;;
-    hidden: no
-    map_layer_name: countries
-  }
-
-  dimension: country_name {
-    group_label: "Geography"
-    label: "Country Name"
-    description: "Full name of the country (e.g., 'United States', 'United Kingdom')."
-    type: string
-    sql: ${TABLE}.country_name ;;
-    hidden: no
-  }
-
-  dimension: region_name {
-    group_label: "Geography"
-    label: "Region Name"
-    description: "The name of the sub-region. Shows DMA Name for the US and Region Name for other countries."
-    type: string
-    hidden: no
-    sql: ${TABLE}.region_name ;;
-  }
-
-  dimension: region_code {
-    group_label: "Geography"
-    label: "Region Code"
-    description: "The code of the sub-region. Shows DMA ID for the US and Region Code for other countries."
-    type: string
-    hidden: no
-    sql: ${TABLE}.region_code ;;
-  }
-
-  dimension: week_cat {
-    hidden: no
-    type: string
-    sql: CAST(${TABLE}.week AS STRING) ;;
-  }
 
   dimension: is_past_week {
     group_label: "Filters"
@@ -153,10 +109,57 @@ view: global_top_terms {
     sql: ${refresh_date} = ${TABLE}.max_refresh_date ;;
   }
 
-  dimension: refresh_date_cat {
-    hidden: no
+  parameter: dynamic_region {
     type: string
-    sql: CAST(${TABLE}.refresh_date AS STRING) ;;
+    suggest_dimension: region_name
+    # hidden: no
+  }
+
+  dimension: reference_metric_value {
+    type: number
+    hidden: yes
+
+    sql:
+          (
+            SELECT
+              AVG(${score})
+            FROM
+              ${TABLE}
+            WHERE
+              ${region_name} = {% parameter ${dynamic_region} %}
+
+
+              {% if global_top_terms.is_latest_refresh_date._is_filtered %}
+                AND refresh_date = ${max_refresh_date}
+              {% endif %}
+
+              {% if global_top_terms.is_latest_week._is_filtered %}
+                AND ${week_date} = ${max_week}
+              {% endif %}
+
+              {% if global_top_terms.week_cat._is_filtered %}
+                AND {% condition week_date %} global_top_terms.week_cat {% endcondition %}
+              {% endif %}
+
+              {% if global_top_terms.term._is_filtered %}
+               AND {% condition term %} global_top_terms.term {% endcondition %}
+              {% endif %}
+
+          )
+        ;;
+    }
+
+  measure: percent_difference_vs_reference {
+    type: number
+    label: "Percent Difference vs {{ dynamic_region._parameter_value }}"
+    value_format_name: percent_2
+    hidden: no
+    sql:
+          SAFE_DIVIDE(
+            ${avg_score} - ${reference_metric_value},
+            ${reference_metric_value}
+          )
+        ;;
   }
 
 }
