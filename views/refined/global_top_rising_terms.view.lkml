@@ -103,43 +103,6 @@ view: global_top_rising_terms {
     }
   }
 
-  # --- Group: Geography (Unified Fields) ---
-
-  dimension: country_code {
-    group_label: "Geography"
-    label: "Country Code"
-    hidden: no
-    type: string
-    sql: ${TABLE}.country_code ;;
-    map_layer_name: countries
-  }
-
-  dimension: country_name {
-    group_label: "Geography"
-    label: "Country Name"
-    hidden: no
-    type: string
-    sql: ${TABLE}.country_name ;;
-  }
-
-  dimension: region_code {
-    group_label: "Geography"
-    label: "Region Code"
-    hidden: no
-    description: "DMA ID for US, Region Code for international."
-    type: string
-    sql: ${TABLE}.region_code ;;
-  }
-
-  dimension: region_name {
-    group_label: "Geography"
-    label: "Region Name"
-    description: "DMA Name for US, Region Name for international."
-    hidden: no
-    type: string
-    sql: ${TABLE}.region_name ;;
-  }
-
   # --- Measures (Key Metrics) ---
 
   measure: average_percent_gain {
@@ -190,12 +153,6 @@ view: global_top_rising_terms {
     convert_tz: no
   }
 
-  dimension: week_cat {
-    hidden: no
-    type: string
-    sql: CAST(${TABLE}.week AS STRING) ;;
-  }
-
   dimension: is_latest_week {
     group_label: "Filters"
     label: "Is Latest Week"
@@ -214,12 +171,6 @@ view: global_top_rising_terms {
     hidden: no
     type: yesno
     sql: ${refresh_date} = ${TABLE}.max_refresh_date ;;
-  }
-
-  dimension: refresh_date_cat {
-    hidden: no
-    type: string
-    sql: CAST(${TABLE}.refresh_date AS STRING) ;;
   }
 
   dimension: one_year_ago_week {

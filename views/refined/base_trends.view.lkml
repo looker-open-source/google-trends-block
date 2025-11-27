@@ -70,6 +70,42 @@ view: base_trends {
     hidden: yes
   }
 
+    # --- Group: Geography ---
+
+  dimension: country_code {
+    group_label: "Geography"
+    label: "Country Code"
+    description: "Two-letter ISO code for the country (e.g., 'US', 'GB')."
+    type: string
+    sql: ${TABLE}.country_code ;;
+    map_layer_name: countries
+  }
+
+  dimension: country_name {
+    group_label: "Geography"
+    label: "Country Name"
+    description: "Full name of the country (e.g., 'United States', 'United Kingdom')."
+    type: string
+    sql: ${TABLE}.country_name ;;
+    hidden: no
+  }
+
+  dimension: region_name {
+    group_label: "Geography"
+    label: "Region Name"
+    description: "The name of the sub-region. Shows DMA Name for the US and Region Name for other countries."
+    type: string
+    hidden: no
+    sql: ${TABLE}.region_name ;;
+  }
+
+  dimension: region_code {
+    group_label: "Geography"
+    label: "Region Code"
+    description: "The code of the sub-region. Shows DMA ID for the US and Region Code for other countries."
+    type: string
+    sql: ${TABLE}.region_code ;;
+  }
   # --- Group: Trend Details ---
 
   dimension: term {
@@ -115,10 +151,11 @@ view: base_trends {
     label: "Refresh "
     description: "The date when this set of term, score, and DMA data was added. This is the partition key."
     type: time
-    timeframes: [raw, date, week, month, quarter, year]
+    timeframes: [raw, date, week]
     convert_tz: no
     datatype: date
     sql: ${TABLE}.refresh_date ;;
+    can_filter: no
   }
 
   dimension_group: week {
@@ -126,15 +163,37 @@ view: base_trends {
     label: "Week "
     description: "The first day of the week for this data point in the time series."
     type: time
-    timeframes: [date, raw, week, month, month_name, month_num, quarter, year, week_of_year]
+    timeframes: [date, raw, week]
     convert_tz: no
     datatype: date
     # hidden: no
     sql: ${TABLE}.week ;;
+    # can_filter: no
   }
 
-  dimension: start_week {
+  dimension: date_week {
+    group_label: "Dates"
+    label: "Date Week"
+    type: date_week
+    sql: TIMESTAMP(${TABLE}.week) ;;
+    hidden: no
+  }
 
+  dimension: week_cat {
+    group_label: "Dates"
+    description: "Categorical Date Week, it takes the week_date value as string not as date dimension_group"
+    hidden: no
+    type: string
+    sql: CAST(${TABLE}.week AS STRING) ;;
+  }
+
+  dimension: refresh_date_cat {
+    group_label: "Dates"
+    description: "Categorical Refresh Week, it takes the refresh_date value as string not as date dimension_group"
+    label: "Refresh Date"
+    hidden: no
+    type: string
+    sql: CAST(${TABLE}.refresh_date AS STRING) ;;
   }
 
   # --- Measures ---

@@ -4,17 +4,21 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: It3RizN2CMzmZ4YkIxZw5Y
+  preferred_slug: IaafMnQDDxKk6YpCFNqoeK
   elements:
-  - title: By Region
-    name: By Region
+  - title: Comparison vs Other Regions
+    name: Comparison vs Other Regions
     model: google_trends
     explore: global_top_terms
     type: looker_grid
-    fields: [global_top_terms.avg_score, global_top_terms.region_name]
+    fields: [global_top_terms.region_name, global_top_terms.percent_difference_vs_reference,
+      global_top_terms.avg_score]
     filters:
       global_top_terms.is_latest_week: 'Yes'
-    sorts: [global_top_terms.avg_score desc 0]
+      global_top_terms.avg_score: NOT NULL
+      global_top_terms.percent_difference_vs_reference: NOT NULL
+      global_top_terms.dynamic_region: Oaxaca
+    sorts: [global_top_terms.percent_difference_vs_reference desc]
     limit: 500
     column_limit: 50
     show_view_names: false
@@ -26,12 +30,42 @@
     size_to_fit: true
     table_theme: white
     limit_displayed_rows: false
-    enable_conditional_formatting: false
+    enable_conditional_formatting: true
     header_text_alignment: left
-    header_font_size: 12
-    rows_font_size: 12
+    header_font_size: '12'
+    rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
+      options:
+        steps: 5
+        reverse: true
+    show_sql_query_menu_options: false
+    show_totals: true
+    show_row_totals: true
+    truncate_header: false
+    minimum_column_width: 75
+    series_labels: {}
+    series_cell_visualizations:
+      global_top_terms.avg_score:
+        is_active: false
+        palette:
+          palette_id: 56d0c358-10a0-4fd6-aa0b-b117bef527ab
+          collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      global_top_terms.percent_difference_vs_reference:
+        is_active: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: first
+      num_rows: 0
+    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
+          custom: {id: cdddc9eb-73cc-6c5c-8459-02741a8919da, label: Custom, type: continuous,
+            stops: [{color: "#ffffff", offset: 0}, {color: "#e6bed6", offset: 100}]},
+          options: {steps: 5}}, bold: false, italic: false, strikethrough: false,
+        fields: [global_top_terms.avg_score]}]
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_y_axis_labels: true
@@ -57,23 +91,12 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    color_application:
-      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
-      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
-      options:
-        steps: 5
-        reverse: true
     x_axis_label: ''
     x_axis_zoom: true
     y_axis_zoom: true
-    limit_displayed_rows_values:
-      show_hide: hide
-      first_last: first
-      num_rows: 0
     hide_legend: true
     series_colors:
       global_top_terms.avg_score: "#079c98"
-    series_labels: {}
     column_spacing_ratio: 0
     show_dropoff: false
     rotation: true
@@ -91,28 +114,33 @@
     comparison_type: value
     comparison_reverse_colors: false
     show_comparison_label: true
+    note_state: collapsed
+    note_display: hover
+    note_text: This table compares the Relative Level of Interest for a specific search
+      term across regions against a reference region selected on Filters Section.
     listen:
-      Is Latest Week (Yes / No): global_top_terms.is_latest_week
-      Week Cat: global_top_terms.week_cat
       Country: global_top_terms.dynamic_country
-      Similar: global_top_terms.term
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Week: global_top_terms.week_cat
+      Term is: global_top_terms.term
+      Is Latest Week (Yes / No): global_top_terms.is_latest_week
+      Region Name: global_top_terms.dynamic_region
     row: 7
     col: 0
-    width: 24
+    width: 12
     height: 10
   - title: Similar terms (Top terms table)
     name: Similar terms (Top terms table)
     model: google_trends
     explore: global_top_terms
-    type: looker_column
+    type: looker_area
     fields: [global_top_terms.avg_score, global_top_terms.term, global_top_terms.week_week]
     pivots: [global_top_terms.term]
     filters:
       global_top_terms.avg_score: "<100"
     sorts: [global_top_terms.term, global_top_terms.week_week desc]
     limit: 500
-    column_limit: 7
+    column_limit: 5
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -135,27 +163,106 @@
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    ordering: none
-    show_null_labels: true
+    show_null_points: false
+    interpolation: monotone
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    show_null_points: true
-    interpolation: monotone
     x_axis_zoom: true
     y_axis_zoom: true
     series_colors:
       global_top_terms.avg_score: "#7CB342"
+    ordering: none
+    show_null_labels: true
     defaults_version: 1
     hidden_pivots: {}
     listen:
       Country: global_top_terms.dynamic_country
-      Similar: global_top_terms.term
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Similar: global_top_terms.term
+      Region Name: global_top_terms.region_name
     row: 0
     col: 0
     width: 24
     height: 7
+  - title: Term Over Time (Last 20 weeks)
+    name: Term Over Time (Last 20 weeks)
+    model: google_trends
+    explore: global_top_terms
+    type: looker_area
+    fields: [global_top_terms.avg_score, global_top_terms.week_week, global_top_terms.avg_rank]
+    filters:
+      global_top_terms.date_week: 20 weeks
+    sorts: [global_top_terms.week_week desc]
+    limit: 500
+    column_limit: 7
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: circle
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: false
+    interpolation: monotone
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    x_axis_zoom: true
+    y_axis_zoom: true
+    hidden_series: [global_top_terms.avg_rank]
+    series_colors:
+      global_top_terms.avg_score: "#7CB342"
+    series_point_styles:
+      global_top_terms.avg_rank: auto
+    cluster_points: false
+    quadrants_enabled: false
+    quadrant_properties:
+      '0':
+        color: ''
+        label: Quadrant 1
+      '1':
+        color: ''
+        label: Quadrant 2
+      '2':
+        color: ''
+        label: Quadrant 3
+      '3':
+        color: ''
+        label: Quadrant 4
+    custom_quadrant_point_x: 5
+    custom_quadrant_point_y: 5
+    custom_x_column: ''
+    custom_y_column: ''
+    custom_value_label_column: ''
+    ordering: none
+    show_null_labels: true
+    defaults_version: 1
+    hidden_pivots: {}
+    listen:
+      Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
+      Country: global_top_terms.dynamic_country
+      Term is: global_top_terms.term
+      Region Name: global_top_terms.region_name
+    row: 7
+    col: 12
+    width: 12
+    height: 10
   filters:
   - name: Is Latest Refresh Week (Yes / No)
     title: Is Latest Refresh Week (Yes / No)
@@ -185,8 +292,8 @@
     explore: global_top_terms
     listens_to_filters: []
     field: global_top_terms.is_latest_week
-  - name: Week Cat
-    title: Week Cat
+  - name: Week
+    title: Week
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -218,8 +325,8 @@
     allow_multiple_values: true
     required: false
     ui_config:
-      type: tag_list
-      display: popover
+      type: dropdown_menu
+      display: inline
     model: google_trends
     explore: global_top_terms
     listens_to_filters: [Country]

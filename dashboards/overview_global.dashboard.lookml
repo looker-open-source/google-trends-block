@@ -4,7 +4,7 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: LZCLpDPrpdRFmiMfnFWTEv
+  preferred_slug: ViDEpa1DXbDtsXeJChXVlW
   elements:
   - title: Top Terms
     name: Top Terms
@@ -73,7 +73,7 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 2
     col: 0
     width: 15
@@ -161,13 +161,13 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 2
     col: 15
     width: 9
     height: 15
-  - title: New Tile
-    name: New Tile
+  - title: Term 1
+    name: Term 1
     model: google_trends
     explore: global_top_terms
     type: single_value
@@ -242,7 +242,7 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 0
     col: 0
     width: 5
@@ -334,13 +334,13 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 0
     col: 5
     width: 3
     height: 2
-  - title: 1st Trend Term Value (Copy)
-    name: 1st Trend Term Value (Copy)
+  - title: 2ndt Trend Term Value
+    name: 2ndt Trend Term Value
     model: google_trends
     explore: global_top_terms
     type: single_value
@@ -426,13 +426,13 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 0
     col: 13
     width: 3
     height: 2
-  - title: New Tile (Copy)
-    name: New Tile (Copy)
+  - title: Term 2
+    name: Term 2
     model: google_trends
     explore: global_top_terms
     type: single_value
@@ -507,13 +507,13 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 0
     col: 8
     width: 5
     height: 2
-  - title: New Tile (Copy 2)
-    name: New Tile (Copy 2)
+  - title: Term 3
+    name: Term 3
     model: google_trends
     explore: global_top_terms
     type: single_value
@@ -588,13 +588,13 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 0
     col: 16
     width: 5
     height: 2
-  - title: 1st Trend Term Value (Copy 2)
-    name: 1st Trend Term Value (Copy 2)
+  - title: 3rd Trend Term Value
+    name: 3rd Trend Term Value
     model: google_trends
     explore: global_top_terms
     type: single_value
@@ -680,7 +680,7 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 0
     col: 21
     width: 3
@@ -756,7 +756,7 @@
       Region: global_top_rising_terms.region_name
       Is Latest Week (Yes / No): global_top_rising_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_rising_terms.is_latest_refresh_date
-      Week Cat: global_top_rising_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 19
     col: 0
     width: 16
@@ -847,7 +847,7 @@
       Region: global_top_rising_terms.region_name
       Is Latest Week (Yes / No): global_top_rising_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_rising_terms.is_latest_refresh_date
-      Week Cat: global_top_rising_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 19
     col: 16
     width: 8
@@ -941,7 +941,7 @@
       Region: global_top_terms.region_name
       Is Latest Week (Yes / No): global_top_rising_terms.is_latest_week
       Is Latest Refresh Week (Yes / No): global_top_rising_terms.is_latest_refresh_date
-      Week Cat: global_top_terms.week_cat
+      Week: global_top_terms.week_cat
     row: 32
     col: 0
     width: 24
@@ -975,8 +975,8 @@
     explore: global_top_terms
     listens_to_filters: []
     field: global_top_terms.is_latest_week
-  - name: Week Cat
-    title: Week Cat
+  - name: Week
+    title: Week
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1008,7 +1008,7 @@
     allow_multiple_values: true
     required: false
     ui_config:
-      type: tag_list
+      type: dropdown_menu
       display: popover
     model: google_trends
     explore: global_top_terms
