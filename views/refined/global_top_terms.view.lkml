@@ -46,7 +46,7 @@ view: global_top_terms {
             ), MAX_DATES AS (
               SELECT MAX(refresh_date) AS max_refresh_date,
                      MAX(week) AS max_week
-              FROM `@{TRENDS_PUBLIC_PROJECT_ID}.@{TRENDS_DATASET}.top_terms`
+              FROM global
             )
             SELECT
               GENERATE_UUID() as primary_key,
