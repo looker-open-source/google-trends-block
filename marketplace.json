@@ -16,7 +16,7 @@
     },
     "TRENDS_DATASET": {
         "label": "Public Google Trends Dataset",
-        "description": "Datased for analysis (google_trends)"
+        "description": "Dataset for analysis (google_trends)"
     }
   },
   "models": [
