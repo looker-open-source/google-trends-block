@@ -17,7 +17,7 @@
       global_top_terms.is_latest_week: 'Yes'
       global_top_terms.avg_score: NOT NULL
       global_top_terms.percent_difference_vs_reference: NOT NULL
-      global_top_terms.dynamic_region: Oaxaca
+      global_top_terms.dynamic_region: ''
     sorts: [global_top_terms.percent_difference_vs_reference desc]
     limit: 500
     column_limit: 50
@@ -308,7 +308,7 @@
   - name: Country
     title: Country
     type: field_filter
-    default_value: MX
+    default_value: US
     allow_multiple_values: true
     required: false
     ui_config:

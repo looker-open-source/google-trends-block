@@ -172,10 +172,4 @@ view: global_top_rising_terms {
     type: yesno
     sql: ${refresh_date} = ${TABLE}.max_refresh_date ;;
   }
-
-  dimension: one_year_ago_week {
-    type: string
-    hidden: no
-    sql: DATE_SUB(MAX(${TABLE}.week), INTERVAL 52 week) ;;
-  }
 }
