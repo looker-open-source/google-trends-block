@@ -1,5 +1,7 @@
 # Google Trends Looker Block
 
+This is not an officially supported Google product. This project is not eligible for the [Google Open Source Software Vulnerability Rewards Program](https://bughunters.google.com/open-source-security).
+
 This Looker Block provides a comprehensive analysis of Google Trends data using the Google BigQuery Public Dataset. It allows users to visualize Top Terms (popularity) and Top Rising Terms (growth velocity) globally, unifying US-specific data (DMAs) with International data (Regions/Countries) into a seamless experience.
 
 ## 📥 Installation & Configuration
