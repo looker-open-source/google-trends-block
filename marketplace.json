@@ -2,7 +2,7 @@
   "label": "Google Trends Block",
   "category_label": "Models",
   "branding": {
-    "image_uri": "https://marketplace-api.looker.com/block-icons/google-trends-block.png",
+    "image_uri": "https://static-a.cdn.looker.app/marketplace/block-icons/google-trends-block.png",
     "tagline": "Visualize global popularity and trend velocity with the Google Trends Block for Looker."
   },
   "constants": {
